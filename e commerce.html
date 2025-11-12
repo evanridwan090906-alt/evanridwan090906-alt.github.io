@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EvanOlshop9 - Koleksi Pakaian Pria dan Wanita Pilihan Terbaik dengan Harga Terjangkau.">
+    <title>EvanOlshop9 - Gaya Terkini, Kualitas Pasti</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        a { text-decoration: none; color: inherit; }
+        section { padding: 80px 0; }
+        h2 { text-align: center; font-size: 2.5rem; margin-bottom: 10px; color: #2c3e50; }
+        .subjudul { text-align: center; color: #666; margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* --- TOMBOL (CTA) --- */
+        .btn { display: inline-block; padding: 12px 30px; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; text-align: center; cursor: pointer; }
+        .btn-primary { background-color: #ee4d2d; color: white; box-shadow: 0 4px 15px rgba(238, 77, 45, 0.3); }
+        .btn-primary:hover { background-color: #c0392b; transform: translateY(-2px); }
+        .btn-secondary { background-color: transparent; border: 2px solid #ee4d2d; color: #ee4d2d; }
+        .btn-secondary:hover { background-color: #ee4d2d; color: white; }
+
+        /* --- NAVBAR --- */
+        .navbar { background: white; padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: #2c3e50; }
+        .nav-menu { display: flex; list-style: none; align-items: center; gap: 25px; }
+        .nav-menu li a { font-weight: 500; font-size: 0.9rem; transition: color 0.3s; }
+        .nav-menu li a:hover { color: #ee4d2d; }
+        .nav-cta { padding: 8px 20px; font-size: 0.9rem; }
+
+        /* --- HERO SECTION --- */
+        .hero { height: 90vh; min-height: 600px; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=2070&auto=format&fit=crop'); background-size: cover; background-position: center; display: flex; align-items: center; text-align: center; color: white; }
+        .hero-content { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .hero h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9; }
+
+        /* --- PRODUK SECTION --- */
+        .grid-produk { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 50px; }
+        .card-produk { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; display: flex; flex-direction: column; }
+        .card-produk:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .card-image-container { width: 100%; padding-top: 100%; position: relative; overflow: hidden; }
+        .card-produk img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .card-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .card-produk h3 { font-size: 1rem; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .harga { color: #ee4d2d; font-weight: 700; font-size: 1.2rem; margin-bottom: 15px; }
+        .card-info .btn { margin-top: auto; width: 100%; }
+
+        /* --- KEUNGGULAN --- */
+        .keunggulan { background-color: white; }
+        .grid-keunggulan { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: center; }
+        .poin-keunggulan { padding: 30px; background: #f8f9fa; border-radius: 10px; }
+        .icon-keunggulan { font-size: 3rem; margin-bottom: 20px; display: block; }
+
+        /* --- TENTANG KAMI --- */
+        .tentang-container { display: flex; align-items: center; gap: 50px; }
+        .tentang-img { flex: 1; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .tentang-img img { width: 100%; height: auto; display: block; }
+        .tentang-text { flex: 1; }
+        .tentang-text p { margin-bottom: 20px; color: #555; }
+
+        /* --- FINAL CTA --- */
+        .cta-akhir { background: linear-gradient(135deg, #ee4d2d, #ff7e5f); text-align: center; color: white; padding: 100px 0; }
+        .cta-akhir h2 { color: white; margin-bottom: 20px; }
+        .cta-akhir p { font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9; }
+        .cta-akhir .btn { background: white; color: #ee4d2d; padding: 15px 50px; font-size: 1.2rem; }
+        .cta-akhir .btn:hover { background: #f1f1f1; transform: scale(1.05); }
+
+        /* --- FOOTER --- */
+        .footer { background: #2c3e50; color: white; padding: 50px 0 20px; text-align: center; }
+        .social-icons { margin: 30px 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .social-icons a { display: flex; align-items: center; background: rgba(255,255,255,0.1); padding: 10px 25px; border-radius: 30px; transition: background 0.3s, transform 0.2s; font-weight: 500; }
+        .social-icons a:hover { background: rgba(255,255,255,0.2); transform: translateY(-3px); }
+        
+        /* CSS untuk SVG icons di footer - PENTING */
+        .social-icons svg { width: 24px; height: 24px; margin-right: 10px; fill: currentColor; }
+        .wa-icon { color: #25D366; } /* Warna asli WA */
+        .shopee-icon { color: #ee4d2d; } /* Warna asli Shopee */
+
+        .copyright { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 0.9rem; opacity: 0.7; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .navbar .container { justify-content: space-between; }
+            .hero h1 { font-size: 2.5rem; }
+            .tentang-container { flex-direction: column; }
+            .tentang-text h2 { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">EvanOlshop9</a>
+            <ul class="nav-menu">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#produk">Koleksi</a></li>
+                <li><a href="#keunggulan">Keunggulan</a></li>
+                <li><a href="#tentang">Tentang</a></li>
+            </ul>
+            <a href="http://shopee.co.id/evanridwan123" target="_blank" class="btn btn-primary nav-cta">Kunjungi Shopee</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Tampil Percaya Diri dengan Gaya Terbaru</h1>
+            <p>Kami mengkurasi pakaian berkualitas premium langsung dari supplier terbaik. Harga pas, kualitas di atas rata-rata.</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                 <a href="#produk" class="btn btn-primary">Lihat Produk Unggulan</a>
+                 <a href="http://shopee.co.id/evanridwan123" target="_blank" class="btn btn-secondary" style="color: white; border-color: white;">Langsung ke Shopee</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- PRODUK -->
+    <section id="produk">
+        <div class="container">
+            <h2>Koleksi Pilihan Kami</h2>
+            <p class="subjudul">Beberapa produk terlaris yang paling disukai pelanggan kami. Stok terbatas!</p>
+            <div class="grid-produk">
+                <div class="card-produk">
+                    <div class="card-image-container"><img src="https://raw.githubusercontent.com/evanridwan090906-alt/website/aaf3149f260e1c953f5d9de8b4022bc95f4f3636/WhatsApp%20Image%202025-11-05%20at%2007.56.24_a4149297.jpg" alt="Produk 1"></div>
+                    <div class="card-info">
+                        <h3>Kaos Polos Premium Cotton Bamboo 30s Unisex</h3>
+                        <p class="harga">Rp 45.000</p>
+                        <a href="http://shopee.co.id/evanridwan123" class="btn btn-secondary" target="_blank">Cek di Shopee</a>
+                    </div>
+                </div>
+                <div class="card-produk">
+                    <div class="card-image-container"><img src="https://raw.githubusercontent.com/evanridwan090906-alt/website/aaf3149f260e1c953f5d9de8b4022bc95f4f3636/WhatsApp%20Image%202025-11-05%20at%2007.56.22_0468fbd6.jpg" alt="Produk 2"></div>
+                    <div class="card-info">
+                        <h3>Kaos Polos Katun Nyaman Original 100% Cotton</h3>
+                        <p class="harga">Rp 35.000</p>
+                        <a href="http://shopee.co.id/evanridwan123" class="btn btn-secondary" target="_blank">Cek di Shopee</a>
+                    </div>
+                </div>
+                <div class="card-produk">
+                    <div class="card-image-container"><img src="https://raw.githubusercontent.com/evanridwan090906-alt/website/aaf3149f260e1c953f5d9de8b4022bc95f4f3636/WhatsApp%20Image%202025-11-05%20at%2007.56.20_d981a893.jpg" alt="Produk 3"></div>
+                    <div class="card-info">
+                        <h3>Kaos Polos Pria V-Neck Lengan Pendek Casual</h3>
+                        <p class="harga">Rp 20.000</p>
+                        <a href="http://shopee.co.id/evanridwan123" class="btn btn-secondary" target="_blank">Cek di Shopee</a>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="http://shopee.co.id/evanridwan123" target="_blank" class="btn btn-primary">Lihat Semua Koleksi</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- DESKRIPSI PRODUK -->
+    <section id="deskripsi-produk" style="background-color: white;"> <!-- Memberi warna latar berbeda -->
+        <div class="container">
+            <div class="tentang-container" style="flex-direction: row-reverse;"> <!-- Tukar posisi gambar & teks -->
+                <div class="tentang-img"><img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=1974&auto=format&fit=crop" alt="Deskripsi Kaos Polos EvanOlshop9"></div>
+                <div class="tentang-text">
+                    <h2>Fokus Kami: Kaos Polos Terbaik</h2>
+                    <p>Kami tidak hanya menjual kaos. Kami menjual kenyamanan, kualitas, dan fondasi untuk gaya harian Anda. Kami spesialis di bidang kaos polos, dan inilah mengapa produk kami unggul:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px; color: #555; list-style-position: inside;">
+                        <li style="margin-bottom: 10px;"><strong>Bahan Premium:</strong> Mulai dari Cotton Combed 30s yang sejuk hingga Cotton Bamboo yang super lembut dan anti-bakteri.</li>
+                        <li style="margin-bottom: 10px;"><strong>Jahitan Presisi:</strong> Menggunakan jahitan rantai di pundak yang kokoh dan rapi, menjamin keawetan kaos.</li>
+                        <li style="margin-bottom: 10px;"><strong>Potongan Modern:</strong> Didesain dengan pola unisex yang pas di badan, tidak terlalu ketat dan tidak terlalu longgar.</li>
+                    </ul>
+                    <a href="#produk" class="btn btn-secondary">Lihat Pilihan Kaos</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KEUNGGULAN -->
+    <section id="keunggulan" class="keunggulan">
+        <div class="container">
+            <h2>Kenapa Belanja di Sini?</h2>
+            <div class="grid-keunggulan">
+                <div class="poin-keunggulan"><span class="icon-keunggulan">🚀</span><h3>Proses Cepat</h3><p>Pesanan langsung diproses dan dikirim secepat mungkin.</p></div>
+                <div class="poin-keunggulan"><span class="icon-keunggulan">⭐</span><h3>Kualitas Terkurasi</h3><p>Hanya menjual produk lolos standar kualitas.</p></div>
+                <div class="poin-keunggulan"><span class="icon-keunggulan">💬</span><h3>Admin Ramah</h3><p>Siap membantu via Chat Shopee jika ada pertanyaan.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TENTANG -->
+    <section id="tentang">
+        <div class="container">
+            <div class="tentang-container">
+                <div class="tentang-img"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop" alt="Tentang Kami"></div>
+                <div class="tentang-text">
+                    <h2>Lebih Dari Sekadar Toko Online</h2>
+                    <p><strong>EvanOlshop9</strong> hadir karena kami percaya tampil keren tidak harus mahal. Kami berfokus pada penyediaan <strong>kaos polos</strong> berkualitas tinggi yang esensial untuk gaya harian Anda.</p>
+                    <p>Misi kami sederhana: menghubungkan Anda dengan supplier pakaian terbaik tanpa ribet, memastikan Anda mendapatkan produk unggulan dengan harga paling jujur.</p>
+                    <a href="http://shopee.co.id/evanridwan123" target="_blank" class="btn btn-secondary">Hubungi Kami</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="cta-akhir">
+        <div class="container">
+            <h2>Siap Upgrade Penampilan Anda?</h2>
+            <p>Klaim voucher diskon pengguna baru langsung di aplikasi Shopee.</p>
+            <a href="http://shopee.co.id/evanridwan123" target="_blank" class="btn">BELANJA SEKARANG</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <h3 style="color: #ecf0f1;">EvanOlshop9</h3>
+            <p>Platform dropship terpercaya untuk kebutuhan fashion harian Anda.</p>
+            
+            <div class="social-icons">
+                <!-- WhatsApp dengan Inline SVG (Pasti Muncul) -->
+                <a href="https://wa.me/qr/ZPDFM4F6THTKI1" target="_blank" aria-label="Chat WhatsApp">
+                    <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-26.3l-6.7-4.2-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 185.5zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+                    WhatsApp
+                </a>
+                <!-- Shopee dengan Inline SVG (Pasti Muncul - Ikon Tas Belanja representatif) -->
+                <a href="http://shopee.co.id/evanridwan123" target="_blank" aria-label="Kunjungi Shopee">
+                   <svg class="shopee-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M153 153v255h205V153H153zm-51 0V102c0-34.1 22.8-63.8 56.3-67.8 40.5-4.8 73.6 29.5 73.6 68v51h51V102c0-34.1 22.8-63.8 56.3-67.8 40.5-4.8 73.6 29.5 73.6 68v51h51c28.2 0 51 22.8 51 51v255c0 28.2-22.8 51-51 51H102c-28.2 0-51-22.8-51-51V204c0-28.2 22.8-51 51-51h51zm102 0v-51c0-10.2-6-19.6-15.6-22.3-15-4.2-29.5 6.9-29.5 22.3v51h45.1z"/></svg>
+                   Official Shopee
+                </a>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 EvanOlshop9.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
