@@ -1,280 +1,109 @@
-/* --- Global & Font --- */
-:root {
-    --warna-utama: #FF6600; /* Warna khas Shopee/Oranye yang cerah */
-    --warna-gelap: #222;
-    --warna-terang: #FFFFFF;
-    --warna-abu: #f4f4f4;
-}
+/* CSS Kustom untuk Tampilan Kreatif */
 
 body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    background-color: var(--warna-terang);
-    color: var(--warna-gelap);
-}
-
-.container {
-    width: 90%;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-/* --- Tombol CTA (Call to Action) --- */
-.cta-button {
-    background-color: var(--warna-utama);
-    color: var(--warna-terang);
-    padding: 12px 25px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.cta-button:hover {
-    background-color: #e65c00;
-    transform: translateY(-2px); /* Efek sedikit terangkat */
-}
-
-/* --- 1. Navigasi --- */
-.navbar {
-    background: var(--warna-terang);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    padding: 1rem 0;
-    position: fixed; /* Tetap di atas saat scroll */
-    width: 100%;
-    top: 0;
-    z-index: 100;
-}
-
-.navbar .container {
+    font-family: 'Inter', sans-serif;
+    /* Padding atas untuk mengakomodasi navbar fixed-top */
+    padding-top: 56px; 
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--warna-utama);
-    text-decoration: none;
+main {
+    flex-grow: 1;
 }
 
-.nav-menu {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-menu li {
-    margin-left: 20px;
-}
-
-.nav-menu a {
-    text-decoration: none;
-    color: var(--warna-gelap);
-    font-weight: 600;
-    transition: color 0.3s ease;
-}
-
-.nav-menu a:hover {
-    color: var(--warna-utama);
-}
-
-.cta-nav {
-    background-color: var(--warna-utama);
-    color: var(--warna-terang);
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-weight: 600;
-}
-
-/* --- 2. Hero Section --- */
-.hero {
-    /* Ganti 'hero-background.jpg' dengan gambar Anda */
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/hero-background.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 70vh; /* 70% dari tinggi layar */
+/* Seksi halaman penuh untuk Home */
+.full-height-section {
+    min-height: calc(100vh - 56px - 110px); /* 100% vh - navbar - footer */
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    color: var(--warna-terang);
-    padding: 0 20px;
-    margin-top: 70px; /* Memberi ruang untuk navbar fixed */
 }
 
-.hero-content h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
-}
-
-.hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-}
-
-/* --- 3. Produk Unggulan --- */
-.produk {
+/* Seksi dengan padding standar */
+.content-section {
     padding: 60px 0;
-    background-color: var(--warna-abu);
-    text-align: center;
 }
 
-.produk h2 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-}
-.subjudul {
-    font-size: 1.1rem;
-    color: #555;
-    margin-bottom: 40px;
-}
-
-.grid-produk {
-    display: grid;
-    /* Ini bagian kreatifnya: 
-       - auto-fit: Buat kolom sebanyak mungkin
-       - minmax: Setiap kolom minimal 280px, maksimal 1fr (rata)
-       - Ini membuat grid otomatis responsif */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+/* Foto profil */
+.profile-img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.card-produk {
-    background: var(--warna-terang);
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    overflow: hidden; /* Agar gambar tidak keluar dari radius */
-    text-align: left;
+/* Kustomisasi Navigasi */
+.navbar-nav .nav-link {
+    transition: color 0.2s ease-in-out;
+    margin: 0 5px;
+}
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: #0d6efd !important; /* Warna biru primer Bootstrap */
+}
+
+/* Efek Kartu Proyek */
+.project-card {
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card-produk:hover {
-    transform: translateY(-10px); /* Efek melayang */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
 }
 
-.card-produk img {
-    width: 100%;
-    height: 200px; /* Pastikan semua gambar seragam */
-    object-fit: cover; /* Mencegah gambar penyet */
+.project-card .card-img-top {
+    transition: transform 0.3s ease;
 }
 
-.card-produk h3 {
-    font-size: 1.3rem;
-    margin: 15px 20px 5px;
+.project-card:hover .card-img-top {
+    transform: scale(1.05);
 }
 
-.card-produk .harga {
+/* Kustomisasi Badge Skill */
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.skill-badge {
+    font-size: 1rem;
+    padding: 0.6em 1em;
+    background-color: #e9ecef;
+    color: #212529;
+    border-radius: 50px;
+    transition: background-color 0.2s, color 0.2s;
+}
+.skill-badge:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+/* Kustomisasi Form */
+.form-control-lg.rounded-pill {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+textarea.form-control-lg {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+/* Ikon Kontak */
+.contact-info .bi {
+    vertical-align: middle;
     font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--warna-utama);
-    margin: 0 20px 10px;
 }
 
-.card-produk .deskripsi {
-    font-size: 0.9rem;
-    margin: 0 20px 20px;
-    color: #444;
-}
-
-.cta-produk {
-    display: block;
-    width: calc(100% - 40px); /* Lebar penuh dikurangi padding */
-    margin: 0 20px 20px;
-    padding: 12px;
-    background-color: var(--warna-gelap);
-    color: var(--warna-terang);
-    text-align: center;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-}
-
-.cta-produk:hover {
-    background-color: var(--warna-utama);
-}
-
-.lihat-semua {
-    margin-top: 50px;
-}
-
-/* --- 4. Tentang Kami / Keunggulan --- */
-.tentang {
-    padding: 60px 0;
-    text-align: center;
-}
-
-.tentang h2 {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-}
-
-.grid-keunggulan {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    text-align: left;
-}
-
-.poin-keunggulan {
-    background: var(--warna-abu);
-    padding: 25px;
-    border-radius: 8px;
-}
-
-.poin-keunggulan h4 {
-    font-size: 1.3rem;
-    color: var(--warna-utama);
-    margin-top: 0;
-}
-
-/* --- 5. Footer --- */
-.footer {
-    background: var(--warna-gelap);
-    color: var(--warna-terang);
-    text-align: center;
-    padding: 30px 0;
-    margin-top: 40px;
-}
-
+/* Ikon Footer */
 .footer a {
-    color: var(--warna-utama);
-    text-decoration: none;
+    transition: color 0.2s;
 }
-
-/* --- Responsif (WAJIB) --- */
-@media (max-width: 768px) {
-    .nav-menu {
-        /* Sembunyikan menu desktop, ganti dengan ikon burger (perlu JS) */
-        /* Untuk HTML murni, kita sederhanakan: */
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        display: none; /* Atau buat menu dropdown sederhana */
-    }
-
-    /* Versi sederhana: sembunyikan link, hanya tampilkan CTA */
-    .nav-menu li { display: none; }
-    .nav-menu .cta-nav { display: block; }
-    .nav-menu li .cta-nav { display: block; }
-
-
-    .hero-content h1 {
-        font-size: 2rem;
-    }
-
-    .hero-content p {
-        font-size: 1rem;
-    }
-
-    .grid-produk, .grid-keunggulan {
-        /* Di mobile, kolom otomatis jadi 1 */
-        grid-template-columns: 1fr;
-    }
+.footer a:hover {
+    color: #0d6efd !important;
 }
