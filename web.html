@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelajah Cirebon.</title>
+    
+    <!-- Memuat Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Konfigurasi Tailwind untuk font Inter & Dark Mode -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Mengaktifkan dark mode berbasis class
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Memuat font Inter dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Internal Tambahan -->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style untuk modal agar tidak bergeser saat scroll */
+        .modal-open {
+            overflow: hidden;
+        }
+        
+        /* Style untuk modal content (animasi) */
+        #modal {
+            transition: opacity 0.2s ease-in-out;
+        }
+        #modal-content {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.95);
+        }
+        #modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #modal:not(.hidden) #modal-content {
+            transform: scale(1);
+        }
+
+        /* Style untuk text shadow di Hero */
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Styling otomatis untuk konten modal dari data-attribute */
+        #modal-body p {
+            margin-bottom: 1rem;
+        }
+        #modal-body h4 {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600; /* font-semibold */
+            margin-top: 1.5rem; /* mt-6 */
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+        #modal-body ul {
+            list-style-type: disc;
+            list-style-position: inside;
+            margin-left: 0.5rem; /* ml-2 */
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem; /* space-y-2 */
+        }
+
+        /* --- FITUR v3 CSS --- */
+
+        /* 1. Animasi Scroll-in */
+        .animated-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition-delay: 0.1s; /* Sedikit delay */
+        }
+        .animated-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 2. Styling Navigasi Aktif (Scroll-spy) */
+        .nav-link.active {
+            color: #2563EB; /* text-blue-600 */
+            font-weight: 700; /* font-bold */
+        }
+        html.dark .nav-link.active {
+            color: #3B82F6; /* text-blue-500 */
+        }
+        
+        /* 3. Tombol Back to Top */
+        #back-to-top {
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #back-to-top.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* 4. Hamburger Menu Animasi (Baru) */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transform: translateY(-20px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #mobile-menu.open {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* 5. Loading Spinner (Baru) */
+        .spinner {
+            border-top-color: #3B82F6; /* text-blue-500 */
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- FITUR v4 CSS --- */
+        
+        /* 6. Animasi Hero Canvas (Baru) */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(to right, #1e3a8a, #06b6d4); /* Fallback jika JS/Canvas gagal */
+        }
+        
+        /* 7. Toast Notification (Baru) */
+        #toast {
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #toast.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        /* 8. Styling Buku Tamu (Baru) */
+        .comment-bubble {
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200 antialiased">
+
+    <!-- ===== HEADER / NAVIGASI ===== -->
+    <header class="bg-white/90 dark:bg-gray-900/90 shadow-md dark:shadow-gray-800 sticky top-0 z-40 backdrop-blur-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Brand Sesuai Request (Kota Asal) -->
+            <a href="#home" class="text-2xl font-bold text-blue-700 dark:text-blue-500">
+                My Brand Favorit
+            </a>
+            
+            <!-- Link Navigasi (Desktop) -->
+            <div class="hidden md:flex items-center space-x-6">
+                <ul class="flex space-x-6">
+                    <li><a href="#home" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-500 font-medium transition-colors" data-section="home">Home</a></li>
+                    <li><a href="#menu-informasi" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-500 font-medium transition-colors" data-section="menu-informasi">Menu</a></li>
+                    <li><a href="#berita" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-500 font-medium transition-colors" data-section="berita">Berita</a></li>
+                    <li><a href="#guestbook" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-500 font-medium transition-colors" data-section="guestbook">Buku Tamu</a></li>
+                    <li><a href="#kontak" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-500 font-medium transition-colors" data-section="kontak">Kontak</a></li>
+                </ul>
+
+                <!-- Tombol Dark Mode -->
+                <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-500" aria-label="Toggle dark mode">
+                    <!-- Icon Sun (Mode Terang) -->
+                    <svg id="theme-icon-sun" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <!-- Icon Moon (Mode Gelap) -->
+                    <svg id="theme-icon-moon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Tombol Hamburger (Mobile) -->
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-gray-600 dark:text-gray-300" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-8 6h8"></path></svg>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Menu Mobile (Baru) -->
+        <div id="mobile-menu" class="md:hidden hidden absolute top-full left-0 w-full bg-white dark:bg-gray-900 shadow-lg pb-4">
+            <ul class="flex flex-col items-center space-y-4 pt-4">
+                <li><a href="#home" class="mobile-nav-link text-gray-700 dark:text-gray-200 font-medium" data-section="home">Home</a></li>
+                <li><a href="#menu-informasi" class="mobile-nav-link text-gray-700 dark:text-gray-200 font-medium" data-section="menu-informasi">Menu</a></li>
+                <li><a href="#berita" class="mobile-nav-link text-gray-700 dark:text-gray-200 font-medium" data-section="berita">Berita</a></li>
+                <li><a href="#guestbook" class="mobile-nav-link text-gray-700 dark:text-gray-200 font-medium" data-section="guestbook">Buku Tamu</a></li>
+                <li><a href="#kontak" class="mobile-nav-link text-gray-700 dark:text-gray-200 font-medium" data-section="kontak">Kontak</a></li>
+                <li>
+                    <!-- Tombol Dark Mode (Mobile) -->
+                    <button id="theme-toggle-mobile" class="mt-2 text-gray-600 dark:text-gray-300" aria-label="Toggle dark mode">
+                        <svg id="theme-icon-sun-mobile" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <svg id="theme-icon-moon-mobile" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="home" class="scroll-target text-white py-20 px-4 relative overflow-hidden h-[50vh] flex items-center justify-center">
+        <!-- Canvas Animasi (Baru) -->
+        <canvas id="hero-canvas"></canvas>
+        
+        <div class="container mx-auto text-center z-10 relative">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-shadow">Jelajah Cirebon</h1>
+            <p class="text-lg md:text-xl text-blue-100 text-shadow">
+                Temukan Fakta Menarik, Sejarah, dan Pesona Kota Cirebon.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== KONTEN UTAMA (MENU CARD) ===== -->
+    <main id="menu-informasi" class="scroll-target container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+        <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-8">
+            Menu Informasi
+        </h2>
+
+        <!-- Search Bar -->
+        <div class="mb-10 max-w-lg mx-auto">
+            <label for="search-box" class="sr-only">Cari menu...</label>
+            <div class="relative">
+                <input type="search" id="search-box" placeholder="Cari menu (cth: kuliner, sejarah...)" class="w-full pl-10 pr-4 py-3 rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Grid Responsif untuk Card -->
+        <div id="card-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            
+            <!-- CARD 1: Profil (Pengganti Portofolio) -->
+            <div class="info-card animated-card group bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-blue-900/20 overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.03] cursor-pointer"
+                 data-title="Profil Kota Cirebon"
+                 data-content="<p>Cirebon adalah salah satu kota pelabuhan penting di pesisir utara Jawa Barat. Dikenal sebagai 'Kota Udang' karena hasil lautnya, Cirebon juga merupakan persimpangan budaya Jawa dan Sunda yang unik.</p><h4 class='font-semibold mt-4 mb-2'>Fakta Menarik:</h4><ul class='list-disc list-inside space-y-1'><li>Memiliki dua keraton utama: Keraton Kasepuhan dan Keraton Kanoman.</li><li>Bahasa yang digunakan adalah 'Basa Cirebon', sebuah dialek khas yang berbeda dari Sunda maupun Jawa standar.</li><li>Merupakan salah satu pusat penyebaran agama Islam di Jawa Barat.</li></ul>">
+                <div class="overflow-hidden">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.KtRfx3SV423_MzBAxkQFmAHaFj?pid=Api&P=0&h=180" 
+                         alt="Ilustrasi Profil Kota Cirebon" 
+                         class="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                         onerror="this.src='https://placehold.co/600x400/3B82F6/FFFFFF?text=Profil+Kota'">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="w-8 h-8 text-blue-600 dark:text-blue-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m-6.75 0h13.5M2.25 12h13.5m-13.5 0a9 9 0 0113.5 0m-13.5 0a9 9 0 0013.5 0m-13.5 0L2.25 6v6m0 0L2.25 6m0 0h13.5m0 0v6m0 0h6m-6 0h6v6m0-6h6m-6 0h6M2.25 6h13.5m0 0v6m-13.5-6v6m0-6v6" /></svg>
+                        <h3 class="text-xl font-semibold text-blue-700 dark:text-blue-500">Profil Kota</h3>
+                    </div>
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.KtRfx3SV423_MzBAxkQFmAHaFj?pid=Api&P=0&h=180"
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 pl-11">Gambaran umum dan fakta unik Cirebon.</p>
+                </div>
+            </div>
+
+            <!-- CARD 2: Sejarah -->
+            <div class="info-card animated-card group bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-red-900/20 overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.03] cursor-pointer"
+                 data-title="Sejarah Cirebon"
+                 data-content="<p>Sejarah Cirebon erat kaitannya dengan Sunan Gunung Jati, salah satu dari Wali Songo. Beliau mendirikan Kesultanan Cirebon pada abad ke-15.</p><p class='mt-2'>Sebelum menjadi kesultanan Islam, Cirebon adalah sebuah desa nelayan kecil bernama Muara Jati yang berada di bawah kekuasaan Kerajaan Galuh (Pajajaran). Peran strategisnya sebagai pelabuhan perdagangan menjadikannya kota yang multikultural sejak zaman dahulu.</p>">
+                <div class="overflow-hidden">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.5TmbmwMhGrdc4iC5CUgfyAHaEK?pid=Api&P=0&h=180" 
+                         alt="Ilustrasi Sejarah Cirebon" 
+                         class="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                         onerror="this.src='https://placehold.co/600x400/EF4444/FFFFFF?text=Sejarah'">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="w-8 h-8 text-red-600 dark:text-red-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" /></svg>
+                        <h3 class="text-xl font-semibold text-red-600 dark:text-red-500">Sejarah</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 pl-11">Jejak langkah kesultanan dan Wali Songo.</p>
+                </div>
+            </div>
+
+            <!-- CARD 3: Kuliner -->
+            <div class="info-card animated-card group bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-emerald-900/20 overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.03] cursor-pointer"
+                 data-title="Kuliner Khas Cirebon"
+                 data-content="<p>Cirebon adalah surga bagi pecinta kuliner. Masakannya memiliki cita rasa yang khas hasil perpaduan banyak budaya.</p><h4 class='font-semibold mt-4 mb-2'>Wajib Coba:</h4><ul class='list-disc list-inside space-y-1'><li><strong>Nasi Jamblang:</strong> Nasi yang dibungkus daun jati dengan berbagai pilihan lauk-pauk.</li><li><strong>Empal Gentong:</strong> Sup daging berkuah santan kuning yang dimasak dalam gentong tanah liat.</li><li><strong>Tahu Gejrot:</strong> Tahu goreng yang dipotong kecil lalu disiram kuah pedas, asam, manis.</li><li><strong>Sega Lengko:</strong> Nasi dengan lauk tahu, tempe, tauge, dan timun, disiram bumbu kacang.</li></ul>">
+                <div class="overflow-hidden">
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.vdTHkDKliQVHNowyCZKjrAHaFP?pid=Api&P=0&h=180" 
+                         alt="Ilustrasi Kuliner Cirebon" 
+                         class="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                         onerror="this.src='https://placehold.co/600x400/10B981/FFFFFF?text=Kuliner'">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="w-8 h-8 text-emerald-600 dark:text-emerald-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1.001A3.75 3.75 0 0012 18z" /></svg>
+                        <h3 class="text-xl font-semibold text-emerald-600 dark:text-emerald-500">Kuliner</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 pl-11">Dari Nasi Jamblang hingga Empal Gentong.</p>
+                </div>
+            </div>
+
+            <!-- CARD 4: Wisata -->
+            <div class="info-card animated-card group bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-amber-900/20 overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.03] cursor-pointer"
+                 data-title="Destinasi Wisata"
+                 data-content="<p>Selain wisata sejarah dan kuliner, Cirebon menawarkan berbagai destinasi unik.</p><h4 class='font-semibold mt-4 mb-2'>Tempat Menarik:</h4><ul class='list-disc list-inside space-y-1'><li><strong>Keraton Kasepuhan:</strong> Keraton tertua dan termegah di Cirebon, lengkap dengan museum pusaka.</li><li><strong>Gua Sunyaragi:</strong> Situs taman air dan gua buatan yang arsitekturnya sangat unik, campuran gaya lokal dan Tiongkok.</li><li><strong>Batik Trusmi:</strong> Sentra kerajinan batik Cirebon (Megamendung) di mana pengunjung bisa melihat proses pembuatan dan berbelanja.</li><li><strong>Bukit Gronggong:</strong> Menawarkan pemandangan kota Cirebon dari ketinggian, ramai di malam hari.</li></ul>">
+                <div class="overflow-hidden">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.8bheNPXk7gREs0k37Peq5QHaGX?pid=Api&P=0&h=180" 
+                         alt="Ilustrasi Wisata Cirebon" 
+                         class="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                         onerror="this.src='https://placehold.co/600x400/F59E0B/FFFFFF?text=Wisata'">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="w-8 h-8 text-amber-600 dark:text-amber-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+                        <h3 class="text-xl font-semibold text-amber-600 dark:text-amber-500">Wisata</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 pl-11">Pesona Gua Sunyaragi dan Keraton.</p>
+                </div>
+            </div>
+            
+            <!-- CARD 5: Keagamaan -->
+            <div class="info-card animated-card group bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-cyan-900/20 overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.03] cursor-pointer"
+                 data-title="Wisata Religi & Keagamaan"
+                 data-content="<p>Sebagai pusat penyebaran Islam, Cirebon memiliki banyak situs religi yang penting.</p><h4 class='font-semibold mt-4 mb-2'>Situs Utama:</h4><ul class='list-disc list-inside space-y-1'><li><strong>Makam Sunan Gunung Jati:</strong> Kompleks pemakaman salah satu Wali Songo yang selalu ramai diziarahi.</li><li><strong>Masjid Agung Sang Cipta Rasa:</strong> Masjid agung di kompleks Keraton Kasepuhan yang dibangun pada era Wali Songo.</li><li><strong>Vihara Dewi Welas Asih:</strong> Salah satu vihara tertua di Cirebon yang menunjukkan toleransi dan akulturasi budaya.</li></ul>">
+                <div class="overflow-hidden">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.XKf4qa3KU-nsBn1654714AHaEc?pid=Api&P=0&h=180" 
+                         alt="Ilustrasi Keagamaan Cirebon" 
+                         class="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                         onerror="this.src='https://placehold.co/600x400/06B6D4/FFFFFF?text=Keagamaan'">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="w-8 h-8 text-cyan-600 dark:text-cyan-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>
+                        <h3 class="text-xl font-semibold text-cyan-600 dark:text-cyan-500">Keagamaan</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 pl-11">Pusat ziarah dan akulturasi budaya.</p>
+                </div>
+            </div>
+
+            <!-- CARD 6: Seni & Budaya (Menggantikan Berita) -->
+            <div class="info-card animated-card group bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-indigo-900/20 overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.03] cursor-pointer"
+                 data-title="Seni & Budaya"
+                 data-content="<p>Cirebon adalah kancah peleburan budaya yang kaya, menghasilkan seni yang unik.</p><h4 class='font-semibold mt-4 mb-2'>Kekayaan Budaya:</h4><ul class='list-disc list-inside space-y-1'><li><strong>Batik Megamendung:</strong> Motif batik ikonik berbentuk awan yang melambangkan kesuburan dan dunia atas.</li><li><strong>Tari Topeng Cirebon:</strong> Tarian sakral yang menceritakan kisah-kisah Panji, setiap topeng (Panji, Samba, Rumyang, Tumenggung, Kelana) memiliki karakter filosofisnya sendiri.</li><li><strong>Sintren:</strong> Kesenian tari mistis di mana penari wanita dirasuki roh bidadari.</li></ul>">
+                <div class="overflow-hidden">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.PS0KN_d_N8aJFC9bQdlO0QHaFj?pid=Api&P=0&w=300&h=300" 
+                         alt="Ilustrasi Seni Budaya Cirebon" 
+                         class="w-full h-48 object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+                         onerror="this.src='https://placehold.co/600x400/8B5CF6/FFFFFF?text=Seni+Budaya'">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center space-x-3">
+                        <!-- Icon -->
+                        <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.601a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.087a3.75 3.75 0 00.495-7.464 5.99 5.99 0 00-1.925 3.546 5.973 5.973 0 01-2.133-1.001A3.75 3.75 0 0012 18.087z" /></svg>
+                        <h3 class="text-xl font-semibold text-indigo-600 dark:text-indigo-500">Seni & Budaya</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2 pl-11">Dari Tari Topeng hingga Batik Megamendung.</p>
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- Pesan "No Result" untuk Search (Baru) -->
+        <div id="no-results" class="text-center text-gray-500 dark:text-gray-400 mt-10 hidden">
+            <h3 class="text-xl font-semibold">Tidak Ditemukan</h3>
+            <p>Menu yang Anda cari tidak tersedia. Coba kata kunci lain.</p>
+        </div>
+    </main>
+
+    <!-- ===== SEKSI BERITA BARU (DINAMIS) ===== -->
+    <section id="berita" class="scroll-target py-16 bg-white dark:bg-gray-800/50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-12">
+                Berita & Acara Terbaru
+            </h2>
+            
+            <!-- Kontainer untuk Berita (Baru) -->
+            <div id="berita-container" class="max-w-3xl mx-auto">
+                <!-- Loading Spinner (Akan diganti JS) -->
+                <div id="loading-spinner" class="flex justify-center items-center py-8">
+                    <div class="spinner w-12 h-12 rounded-full border-4 border-t-4 border-gray-200 dark:border-gray-700"></div>
+                </div>
+                
+                <!-- Konten berita akan di-inject di sini -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SEKSI BUKU TAMU (FIREBASE) - BARU ===== -->
+    <section id="guestbook" class="scroll-target py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-12">
+                Buku Tamu
+            </h2>
+            
+            <div class="max-w-2xl mx-auto">
+                <!-- Form Input Komentar -->
+                <form id="comment-form" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+                    <div class="mb-4">
+                        <label for="comment-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nama</label>
+                        <input type="text" id="comment-name" placeholder="Nama Anda..." class="w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="comment-message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pesan</label>
+                        <textarea id="comment-message" rows="3" placeholder="Tinggalkan pesan Anda..." class="w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" id="comment-submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                            Kirim
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Tampilan Komentar -->
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">Pesan Terbaru:</h3>
+                <div id="comments-container" class="space-y-4 max-h-80 overflow-y-auto pr-2">
+                    <!-- Komentar dari Firebase akan dimuat di sini -->
+                    <p id="comments-loading" class="text-gray-500 dark:text-gray-400">Memuat komentar...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ===== FOOTER (BAGIAN KONTAK) ===== -->
+    <footer id="kontak" class="scroll-target bg-slate-900 dark:bg-gray-950 text-gray-300 py-16 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Kolom 1: Tentang -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Tentang Web Ini</h4>
+                    <p class="text-sm">
+                        Website ini dibuat untuk memenuhi tugas dan menyajikan informasi serta fakta valid mengenai Kota Cirebon.
+                    </p>
+                </div>
+                
+                <!-- Kolom 2: Kontak -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Kontak</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>
+                            <span class="font-medium text-gray-400">Email:</span> 
+                            <a href="mailto:info@cirebon.id" class="hover:text-white transition-colors">evanridwan090906@gmail.com</a>
+                        </li>
+                        <li>
+                            <span class="font-medium text-gray-400">Telepon:</span> 
+                            <span class="hover:text-white">(0895) 320376018</span>
+                        </li>
+                        <li>
+                            <span class="font-medium text-gray-400">Alamat:</span> 
+                            <span class="hover:text-white">Jl. Asem gede, Cirebon, Jawa Barat</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 3: Sosial Media (SUDAH DIUBAH) -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Media Sosial</h4>
+                    <div class="flex space-x-4">
+                        <!-- WhatsApp -->
+                        <a href="https://wa.me/qr/ZPDFM4F6THTKI1" class="text-gray-400 hover:text-green-400 transition-colors" aria-label="WhatsApp">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.06 21.94L7.31 20.58C8.75 21.38 10.36 21.82 12.04 21.82C17.5 21.82 21.95 17.37 21.95 11.91C21.95 6.45 17.5 2 12.04 2M12.04 3.67C16.57 3.67 20.28 7.38 20.28 11.91C20.28 16.44 16.57 20.15 12.04 20.15C10.48 20.15 8.99 19.73 7.7 18.99L7.32 18.78L4.47 19.53L5.24 16.78L5.03 16.38C4.18 15 3.8 13.47 3.8 11.91C3.8 7.38 7.51 3.67 12.04 3.67M17.34 14.6C17.11 14.97 16.03 15.53 15.42 15.65C14.81 15.77 14.1 15.79 13.56 15.61C13.02 15.42 12.26 15.19 11.39 14.34C10.33 13.3 9.5 12.06 9.32 11.58C9.13 11.1 9.27 10.9 9.53 10.64C9.76 10.41 10 10.18 10.22 9.97C10.41 9.78 10.5 9.63 10.64 9.39C10.78 9.15 10.7 8.94 10.56 8.7C10.41 8.46 9.8 7.03 9.56 6.47C9.32 5.91 9.08 5.96 8.87 5.95C8.67 5.94 8.41 5.94 8.15 5.94C7.89 5.94 7.55 6.03 7.24 6.32C6.94 6.62 6.13 7.38 6.13 8.7C6.13 10.02 7.27 11.29 7.42 11.48C7.57 11.68 9.68 14.83 12.82 16.2C15.96 17.57 16.27 17.15 16.63 17.1C16.98 17.06 17.91 16.5 18.14 15.86C18.37 15.23 18.37 14.71 18.27 14.6C18.18 14.49 17.57 14.22 17.34 14.6Z"></path></svg>
+                        </a>
+                        <!-- Instagram -->
+                        <a href="#" class="text-gray-400 hover:text-pink-400 transition-colors" aria-label="Instagram">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.227-1.664 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.227 1.664-4.771 4.919 4.919C8.416 2.175 8.796 2.163 12 2.163zm0 1.626c-3.141 0-3.505.012-4.73.068-2.812.128-3.972 1.3-4.1 4.1-.056 1.225-.068 1.585-.068 4.73s.012 3.505.068 4.73c.128 2.812 1.3 3.972 4.1 4.1 1.225.056 1.585.068 4.73.068s3.505-.012 4.73-.068c2.812-.128 3.972-1.3 4.1-4.1.056-1.225.068 1.585.068-4.73s-.012-3.505-.068-4.73c-.128-2.812-1.3-3.972-4.1-4.1-1.225-.056-1.585-.068-4.73-.068zm0 3.18c-1.957 0-3.52 1.563-3.52 3.52s1.563 3.52 3.52 3.52 3.52-1.563 3.52-3.52-1.563-3.52-3.52-3.52zm0 5.44c-1.058 0-1.92- .862-1.92-1.92s.862-1.92 1.92-1.92 1.92.862 1.92 1.92-.862 1.92-1.92 1.92zM16.8 6.72a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm">
+                <p>&copy; 2025.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== MODAL (POP-UP) UNTUK INFORMASI ===== -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        
+        <!-- Latar belakang modal, klik untuk menutup -->
+        <div id="modal-overlay" class="absolute inset-0"></div>
+        
+        <!-- Konten Modal -->
+        <div id="modal-content" class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] overflow-y-auto z-10">
+            <!-- Header Modal -->
+            <div class="flex justify-between items-center border-b dark:border-gray-700 p-4 sticky top-0 bg-white dark:bg-gray-800 z-10">
+                <h3 id="modal-title" class="text-2xl font-semibold text-gray-900 dark:text-gray-100"></h3>
+                <button id="modal-close" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" aria-label="Tutup modal">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Body Modal -->
+            <div id="modal-body" class="p-6 text-gray-700 dark:text-gray-300">
+                <!-- Konten dinamis akan diisi oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TOMBOL BACK TO TOP ===== -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg transition-all z-20" aria-label="Kembali ke atas">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+    </button>
+    
+    <!-- ===== TOAST NOTIFICATION (BARU) ===== -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 py-2 px-5 rounded-full shadow-lg z-30">
+        <span id="toast-message"></span>
+    </div>
+
+
+    <!-- ===== JAVASCRIPT UTAMA (MODUL) ===== -->
+    <script type="module">
+        // --- IMPORT FIREBASE (BARU) ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, addDoc, setDoc, onSnapshot, collection, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- Variabel Global Firebase (WAJIB) ---
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        // --- Inisialisasi Firebase ---
+        let app, auth, db, userId;
+        let commentsCol; // Koleksi komentar
+        
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        } catch (e) {
+            console.error("Gagal menginisialisasi Firebase:", e);
+            document.getElementById('comments-loading').textContent = "Gagal memuat Firebase. Fitur Buku Tamu non-aktif.";
+        }
+
+        // --- Fungsi Auth (BARU) ---
+        async function setupAuth() {
+            if (!auth) return;
+            
+            // Coba sign-in dengan token jika tersedia
+            if (typeof __initial_auth_token !== 'undefined') {
+                try {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } catch (e) {
+                    console.error("Gagal sign-in dengan token, mencoba anonim:", e);
+                    await signInAnonymously(auth);
+                }
+            } else {
+                // Sign-in anonim sebagai fallback
+                try {
+                    await signInAnonymously(auth);
+                } catch (e) {
+                    console.error("Gagal sign-in anonim:", e);
+                }
+            }
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    userId = user.uid;
+                    // Tampilkan User ID di UI (opsional, bagus untuk demo)
+                    // console.log("User ID:", userId); 
+                    
+                    // Setelah auth siap, inisialisasi listener buku tamu
+                    initGuestbookListener();
+                } else {
+                    userId = null;
+                    console.log("User belum terautentikasi.");
+                }
+            });
+        }
+        
+        // --- Logika Aplikasi Utama ---
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Setup Firebase Auth saat DOM siap
+            if (app) {
+                setupAuth();
+            }
+
+            // --- 1. LOGIKA MODAL (TETAP SAMA) ---
+            const cards = document.querySelectorAll('.info-card');
+            const modal = document.getElementById('modal');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const modalClose = document.getElementById('modal-close');
+            
+            const openModal = (title, content) => {
+                modalTitle.textContent = title;
+                modalBody.innerHTML = content;
+                modal.classList.remove('hidden');
+                document.body.classList.add('modal-open');
+            };
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+                document.body.classList.remove('modal-open');
+            };
+
+            cards.forEach(card => {
+                if (card.dataset.disabled === 'true') {
+                    card.classList.add('cursor-not-allowed', 'opacity-70');
+                    return; 
+                }
+                card.addEventListener('click', () => {
+                    const title = card.getAttribute('data-title');
+                    const content = card.getAttribute('data-content');
+                    if (title && content) {
+                        openModal(title, content);
+                    }
+                });
+            });
+
+            modalClose.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', closeModal);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+
+            // --- 2. LOGIKA DARK MODE ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            const sunIcons = [document.getElementById('theme-icon-sun'), document.getElementById('theme-icon-sun-mobile')];
+            const moonIcons = [document.getElementById('theme-icon-moon'), document.getElementById('theme-icon-moon-mobile')];
+
+            const updateIcons = (isDarkMode) => {
+                if (isDarkMode) {
+                    sunIcons.forEach(icon => icon.classList.remove('hidden'));
+                    moonIcons.forEach(icon => icon.classList.add('hidden'));
+                } else {
+                    sunIcons.forEach(icon => icon.classList.add('hidden'));
+                    moonIcons.forEach(icon => icon.classList.remove('hidden'));
+                }
+            };
+
+            const toggleTheme = () => {
+                const isDarkMode = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+                updateIcons(isDarkMode);
+            };
+
+            // Cek tema saat load
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+                updateIcons(true);
+            } else {
+                updateIcons(false);
+            }
+
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            // --- 3. LOGIKA BACK TO TOP ---
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // --- 4. LOGIKA ANIMASI SCROLL-IN ---
+            const animatedCards = document.querySelectorAll('.animated-card');
+            
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // 10% terlihat
+            };
+
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing setelah animasi
+                    }
+                });
+            };
+
+            const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
+            animatedCards.forEach(card => scrollObserver.observe(card));
+
+            // --- 5. LOGIKA SCROLL-SPY NAVIGASI ---
+            const sections = document.querySelectorAll('.scroll-target');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+            window.addEventListener('scroll', () => {
+                let currentSection = '';
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    // Beri offset sedikit (misal 150px) agar lebih akurat
+                    if (window.scrollY >= sectionTop - 150) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.section === currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Update active state di mobile links juga
+                mobileNavLinks.forEach(link => {
+                    link.classList.remove('active', 'text-blue-600', 'dark:text-blue-500'); // Hapus style aktif
+                    if (link.dataset.section === currentSection) {
+                        link.classList.add('active', 'text-blue-600', 'dark:text-blue-500'); // Tambah style aktif
+                    }
+                });
+            });
+
+            // --- 6. LOGIKA HAMBURGER MENU ---
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', () => {
+                const isOpen = mobileMenu.classList.toggle('open');
+                if (isOpen) {
+                    mobileMenu.classList.remove('hidden');
+                } else {
+                    setTimeout(() => {
+                        mobileMenu.classList.add('hidden');
+                    }, 300); // Sesuaikan dengan durasi transisi
+                }
+            });
+            
+            // Logika theme toggle untuk mobile
+            themeToggleMobile.addEventListener('click', toggleTheme);
+            
+            // Tutup menu saat link mobile di-klik
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                    setTimeout(() => {
+                        mobileMenu.classList.add('hidden');
+                    }, 300); // Sesuaikan dengan durasi transisi
+                });
+            });
+            
+            // --- 7. LOGIKA SEARCH ---
+            const searchBox = document.getElementById('search-box');
+            const cardGrid = document.getElementById('card-grid');
+            const allCards = cardGrid.querySelectorAll('.info-card');
+            const noResultsMessage = document.getElementById('no-results');
+
+            searchBox.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                let visibleCount = 0;
+
+                allCards.forEach(card => {
+                    const title = card.dataset.title.toLowerCase();
+                    const description = card.querySelector('p').textContent.toLowerCase();
+                    const isMatch = title.includes(query) || description.includes(query);
+                    
+                    if (isMatch) {
+                        card.style.display = '';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                noResultsMessage.classList.toggle('hidden', visibleCount > 0);
+            });
+
+            // --- 8. LOGIKA SIMULASI FETCH BERITA ---
+            const beritaContainer = document.getElementById('berita-container');
+            const loadingSpinner = document.getElementById('loading-spinner');
+
+            const mockBerita = [
+                {
+                    judul: "Festival Keraton Nusantara Hadir Kembali di Cirebon!",
+                    tanggal: "10 November 2025",
+                    kategori: "Budaya",
+                    snippet: "Setelah vakum, Festival Keraton Nusantara (FKN) akan kembali digelar meriah di Cirebon, menampilkan kirab agung dan pameran pusaka dari berbagai keraton..."
+                },
+                {
+                    judul: "Harga Bawang Merah di Pasar Kanoman Stabil",
+                    tanggal: "9 November 2025",
+                    kategori: "Ekonomi",
+                    snippet: "Harga komoditas bawang merah dan kebutuhan pokok lainnya dilaporkan stabil menjelang akhir tahun di Pasar Kanoman, Cirebon..."
+                },
+                {
+                    judul: "Pemugaran Gua Sunyaragi Tahap Akhir Dimulai",
+                    tanggal: "8 November 2025",
+                    kategori: "Wisata",
+                    snippet: "Proses revitalisasi situs cagar budaya Gua Sunyaragi telah memasuki tahap akhir, fokus pada perbaikan struktur batu karang dan sistem drainase..."
+                }
+            ];
+
+            const loadBerita = () => {
+                setTimeout(() => {
+                    if (!loadingSpinner) return;
+                    loadingSpinner.style.display = 'none';
+                    
+                    let beritaHTML = '<div class="space-y-6">';
+                    mockBerita.forEach(item => {
+                        beritaHTML += `
+                            <article class="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm font-medium text-blue-600 dark:text-blue-500">${item.kategori}</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400">${item.tanggal}</span>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">${item.judul}</h3>
+                                <p class="text-gray-600 dark:text-gray-400">${item.snippet}</p>
+                                <a href="#" class="inline-block mt-3 text-blue-600 dark:text-blue-500 font-semibold hover:underline">Baca Selengkapnya &rarr;</a>
+                            </article>
+                        `;
+                    });
+                    beritaHTML += '</div>';
+                    beritaContainer.innerHTML = beritaHTML;
+                }, 1500); // 1.5 detik
+            };
+            loadBerita();
+
+            // --- 9. FITUR BARU: LOGIKA HERO CANVAS ---
+            const canvas = document.getElementById('hero-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            
+            // Set ukuran canvas
+            function resizeCanvas() {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Buat partikel
+            function createParticles() {
+                particles = [];
+                let count = (canvas.width * canvas.height) / 10000;
+                for(let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: Math.random() * 2 + 1,
+                        vx: Math.random() * 1 - 0.5,
+                        vy: Math.random() * 1 - 0.5,
+                        color: 'rgba(255, 255, 255, 0.5)'
+                    });
+                }
+            }
+            createParticles();
+
+            // Animasikan partikel
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Gambar gradien background
+                const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+                gradient.addColorStop(0, '#1e3a8a'); // from-blue-900
+                gradient.addColorStop(1, '#06b6d4'); // to-cyan-500
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Gerakkan dan gambar partikel
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+            // --- 10. FITUR BARU: LOGIKA TOAST NOTIFICATION ---
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            let toastTimer;
+
+            function showToast(message) {
+                clearTimeout(toastTimer);
+                toastMessage.textContent = message;
+                toast.classList.add('show');
+                
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000); // Hilang setelah 3 detik
+            }
+
+            // --- 11. FITUR BARU: LOGIKA BUKU TAMU (FIREBASE) ---
+            const commentForm = document.getElementById('comment-form');
+            const commentName = document.getElementById('comment-name');
+            const commentMessage = document.getElementById('comment-message');
+            const commentSubmit = document.getElementById('comment-submit');
+            const commentsContainer = document.getElementById('comments-container');
+            const commentsLoading = document.getElementById('comments-loading');
+
+            // Handle submit form komentar
+            commentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!db || !userId) {
+                    showToast("Database belum siap. Coba lagi.");
+                    return;
+                }
+
+                const name = commentName.value.trim();
+                const message = commentMessage.value.trim();
+
+                if (name === '' || message === '') {
+                    showToast("Nama dan pesan tidak boleh kosong!");
+                    return;
+                }
+                
+                commentSubmit.disabled = true;
+                commentSubmit.textContent = "Mengirim...";
+
+                try {
+                    // Simpan ke Firestore
+                    await addDoc(commentsCol, {
+                        name: name,
+                        message: message,
+                        timestamp: serverTimestamp(),
+                        authorId: userId // Tandai siapa pengirimnya
+                    });
+                    
+                    // Reset form
+                    commentName.value = '';
+                    commentMessage.value = '';
+                    showToast("Komentar berhasil dikirim!");
+
+                } catch (error) {
+                    console.error("Gagal mengirim komentar: ", error);
+                    showToast("Gagal mengirim komentar.");
+                } finally {
+                    commentSubmit.disabled = false;
+                    commentSubmit.textContent = "Kirim";
+                }
+            });
+
+            // Fungsi untuk render komentar
+            function renderComment(doc) {
+                const data = doc.data();
+                const div = document.createElement('div');
+                div.className = 'comment-bubble bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm';
+                
+                // Format timestamp (jika ada)
+                let dateStr = '';
+                if (data.timestamp && data.timestamp.toDate) {
+                    dateStr = data.timestamp.toDate().toLocaleString('id-ID', {
+                        dateStyle: 'short',
+                        timeStyle: 'short'
+                    });
+                }
+                
+                div.innerHTML = `
+                    <div class="flex justify-between items-center mb-1">
+                        <strong class="text-blue-600 dark:text-blue-500">${data.name || 'Anonim'}</strong>
+                        <span class="text-xs text-gray-500 dark:text-gray-400">${dateStr}</span>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300">${data.message || ''}</p>
+                `;
+                return div;
+            }
+
+            // Fungsi untuk inisialisasi listener buku tamu
+            function initGuestbookListener() {
+                if (!db) return;
+                
+                // Tentukan path koleksi (public)
+                commentsCol = collection(db, `artifacts/${appId}/public/data/guestbook`);
+                
+                // Buat query (bisa di-limit/order)
+                const q = query(commentsCol); // Nanti bisa ditambah: orderBy('timestamp', 'desc'), limit(20)
+
+                // Listener onSnapshot (REAL-TIME!)
+                onSnapshot(q, (snapshot) => {
+                    // Hapus pesan loading
+                    if (commentsLoading) {
+                        commentsLoading.style.display = 'none';
+                    }
+                    
+                    // Kosongkan kontainer
+                    commentsContainer.innerHTML = '';
+                    
+                    if (snapshot.empty) {
+                        commentsContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">Belum ada komentar. Jadilah yang pertama!</p>';
+                    } else {
+                        // Urutkan data di client-side berdasarkan timestamp
+                        const docs = snapshot.docs.sort((a, b) => {
+                            const timeA = a.data().timestamp?.toMillis() || 0;
+                            const timeB = b.data().timestamp?.toMillis() || 0;
+                            return timeB - timeA; // Urutkan dari terbaru
+                        });
+
+                        // Render setiap dokumen
+                        docs.forEach(doc => {
+                            commentsContainer.appendChild(renderComment(doc));
+                        });
+                    }
+                }, (error) => {
+                    console.error("Error get comments: ", error);
+                    if (commentsLoading) {
+                        commentsLoading.textContent = "Gagal memuat komentar.";
+                    }
+                });
+            }
+
+        }); // Akhir DOMContentLoaded
+    </script>
+</body>
+</html>
