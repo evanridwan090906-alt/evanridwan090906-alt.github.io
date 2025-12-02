@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page Kreatif | Tugas 1</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Google Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS Kustom (Sesuai permintaan) -->
+    <style>
+        /* Variabel Warna Kustom - TEMA TERANG */
+        :root {
+            --bs-body-font-family: 'Inter', sans-serif;
+            --bs-body-bg: #ffffff; /* Latar belakang putih */
+            --bs-dark-rgb: 255, 255, 255;
+            --bs-light-rgb: 51, 65, 85; /* Teks gelap (#334155) */
+            --bs-primary: #38bdf8; /* Aksen biru cerah */
+            --bs-primary-rgb: 56, 189, 248;
+            --bs-secondary: #e2e8f0; /* Border abu-abu terang */
+        }
+        
+        /* Mengaktifkan scroll-behavior yang mulus */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--bs-body-font-family);
+            background-color: var(--bs-body-bg);
+            color: rgb(var(--bs-light-rgb)); /* Teks gelap */
+        }
+
+        /* ----- Navbar ----- */
+        .navbar {
+            /* Efek blur pada navbar saat sticky */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.75) !important; /* Latar belakang putih transparan */
+            border-bottom: 1px solid var(--bs-secondary);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: rgba(var(--bs-light-rgb), 0.7); /* Teks gelap transparan */
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: rgb(var(--bs-light-rgb)); /* Teks gelap solid */
+        }
+
+        /* ----- Hero Section ----- */
+        .hero-section {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 0 4rem 0;
+            background-image: radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(56, 189, 248, 0.1), transparent 30%);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            /* --- PENYESUAIAN KREATIF: Gradien Teks (Versi Gelap) --- */
+            background: linear-gradient(120deg, rgb(var(--bs-light-rgb)), var(--bs-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Responsif untuk H1 */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.8rem;
+            }
+            .hero-section {
+                text-align: center;
+                min-height: 80vh;
+                padding-top: 6rem;
+            }
+        }
+        
+        .hero-visual {
+            /* Ini adalah elemen visual "3D" / kreatif */
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            perspective: 1000px; /* Diperlukan untuk efek 3D */
+        }
+
+        .morph-blob {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--bs-primary), #a855f7);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morph 12s ease-in-out infinite, spin 20s linear infinite;
+            box-shadow: 0 20px 50px rgba(56, 189, 248, 0.3);
+            position: absolute;
+            opacity: 0.7;
+        }
+        
+        .morph-blob:nth-child(2) {
+            animation-delay: -5s;
+            opacity: 0.4;
+            transform: scale(1.2);
+            filter: blur(20px);
+        }
+
+        /* Animasi untuk blob */
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ----- Tombol Kustom (CTA) ----- */
+        .btn-primary {
+            background-color: var(--bs-primary);
+            border-color: var(--bs-primary);
+            color: #ffffff; /* Teks putih di atas tombol biru */
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            background-color: #67cffc;
+            border-color: #67cffc;
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border-color: var(--bs-secondary);
+            color: rgb(var(--bs-light-rgb)); /* Teks gelap */
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bs-secondary);
+            color: rgb(var(--bs-light-rgb)); /* Teks gelap */
+        }
+
+        /* ----- Section Umum ----- */
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+        
+        /* Latar belakang selang-seling */
+        .bg-custom-light {
+            background-color: #f8fafc; /* Latar belakang off-white */
+        }
+        
+        .section-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        /* ----- Fitur ----- */
+        .feature-card {
+            background-color: #f8fafc; /* Latar belakang off-white */
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--bs-secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--bs-primary);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--bs-primary);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+        
+        .feature-card h3 {
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        
+        /* ----- Portfolio (Efek 3D) ----- */
+        .portfolio-card {
+            border: 1px solid var(--bs-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #ffffff; /* Latar belakang kartu putih */
+            /* Efek transisi untuk 3D */
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transform-style: preserve-3d;
+        }
+
+        .portfolio-card:hover {
+            /* Efek "3D tilt" saat di-hover */
+            transform: translateY(-10px) rotateX(8deg) rotateY(3deg) scale(1.02);
+            /* --- PENYESUAIAN KREATIF: Efek Glow --- */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 0 25px rgba(56, 189, 248, 0.3);
+            border-color: var(--bs-primary);
+        }
+
+        .portfolio-card .card-img-top {
+            /* Placeholder gambar yang dioptimalkan */
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+            filter: grayscale(30%);
+            transition: filter 0.3s ease;
+        }
+        
+        .portfolio-card:hover .card-img-top {
+            filter: grayscale(0%);
+        }
+
+        .portfolio-card .card-body {
+            padding: 1.5rem;
+        }
+        
+        .portfolio-card .card-title {
+            font-weight: 600;
+            color: rgb(var(--bs-light-rgb)); /* Teks gelap */
+        }
+        
+        .portfolio-card .card-text {
+            color: rgba(var(--bs-light-rgb), 0.7); /* Teks gelap transparan */
+        }
+
+        /* ----- Form Kontak ----- */
+        .form-control {
+            background-color: #ffffff; /* Latar belakang form putih */
+            border: 1px solid var(--bs-secondary);
+            padding: 0.75rem 1rem;
+            color: rgb(var(--bs-light-rgb)); /* Teks input gelap */
+        }
+        
+        .form-control::placeholder {
+            color: rgba(var(--bs-light-rgb), 0.5); /* Placeholder abu-abu */
+        }
+        
+        .form-control:focus {
+            background-color: #ffffff;
+            color: rgb(var(--bs-light-rgb));
+            border-color: var(--bs-primary);
+            box-shadow: 0 0 0 0.25rem rgba(56, 189, 248, 0.25);
+        }
+        
+        .form-label {
+            font-weight: 600;
+        }
+        
+        /* ----- Footer ----- */
+        footer {
+            border-top: 1px solid var(--bs-secondary);
+            padding: 2rem 0;
+            background-color: #f8fafc; /* Latar belakang footer off-white */
+            color: rgba(var(--bs-light-rgb), 0.6); /* Teks footer abu-abu */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Navbar Responsif -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="navbar"> <!-- 'navbar-dark' dihapus -->
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-layers-fill me-2"></i>EVAN.
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#kontak">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Section -->
+    <header class="hero-section" id="home">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Kolom Teks (Mobile-first: Tampil di atas) -->
+                <div class="col-lg-6 order-lg-1">
+                    <h1 class="display-3 mb-4">Hai Saya Evan.</h1>
+                    <p class="lead text-muted mb-4"> <!-- 'text-white-50' diubah menjadi 'text-muted' -->
+                        Kami membangun pengalaman digital yang cepat, responsif, dan memukau
+                        yang berfokus pada hasil dan kepuasan pengguna.
+                    </p>
+                    <div class="d-flex gap-2 flex-wrap justify-content-center justify-content-lg-start">
+                        <a href="#kontak" class="btn btn-primary btn-lg">Mulai Proyek</a>
+                        <a href="#portfolio" class="btn btn-secondary btn-lg">Lihat Karya</a>
+                    </div>
+                </div>
+<div class="col-lg-6 order-lg-2">
+    
+    <img src="https://raw.githubusercontent.com/evanridwan090906-alt/website/aa53d4d9f521756ad7e38ec42513c575580f40b3/WhatsApp%20Image%202025-10-21%20at%2007.04.02_5e40e95d.jpg" 
+         class="img-fluid" 
+         alt="Tampilan situs web saya" width="200", height="500">
+
+</div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- 4. Portfolio (Grid 3 Kartu) -->
+    <section id="portfolio" class="bg-custom-light">
+        <div class="container">
+            <h2 class="section-title">Karya Terbaru Kami</h2>
+            <div class="row g-4">
+                <!-- Card 1 -->
+                <div class="col-md-4">
+                    <div class="portfolio-card">
+                        <img src="https://raw.githubusercontent.com/evanridwan090906-alt/website/aa53d4d9f521756ad7e38ec42513c575580f40b3/Screenshot%20(70).png" class="card-img-top" alt="Placeholder gambar untuk proyek satu">
+                        <div class="card-body">
+                            <h5 class="card-title">Certifikasi Cisco Networking</h5>
+                            <p class="card-text">Certifikasi Cisco Networking and Netacad tahun 2024-2025.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-md-4">
+                    <div class="portfolio-card">
+                        <img src="https://raw.githubusercontent.com/evanridwan090906-alt/website/aa53d4d9f521756ad7e38ec42513c575580f40b3/WhatsApp%20Image%202025-11-01%20at%2009.11.00_b8261885.jpg" class="card-img-top" alt="Placeholder gambar untuk proyek dua">
+                        <div class="card-body">
+                            <h5 class="card-title">Potret Sunset</h5>
+                            <p class="card-text">Potret Sunset Menggunakan Hp dan LightRoom.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="col-md-4">
+                    <div class="portfolio-card">
+                        <img src="https://raw.githubusercontent.com/evanridwan090906-alt/website/aa53d4d9f521756ad7e38ec42513c575580f40b3/WhatsApp%20Image%202025-11-01%20at%2009.10.36_e391e29d.jpg" class="card-img-top" alt="Placeholder gambar untuk proyek tiga">
+                        <div class="card-body">
+                            <h5 class="card-title">Ujian Kompetensi Keahlian (UKK)</h5>
+                            <p class="card-text">Ujian Kompetensi Keahlian KELISTRIKAN(OTOMOTIF).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Form Kontak -->
+    <section id="kontak">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="section-title">Hubungi Kami</h2>
+                    <p class="text-center text-muted mb-5">
+                        Punya ide? Mari kita wujudkan bersama.
+                    </p>
+                    
+                    <!-- Form dengan validasi Bootstrap -->
+                    <form action="#" method="POST" class="needs-validation" novalidate>
+                        <!-- Nama -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="name" placeholder="Nama Anda" required>
+                            <div class="invalid-feedback">
+                                Nama tidak boleh kosong.
+                            </div>
+                        </div>
+                        
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Alamat Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="email@anda.com" required>
+                            <div class="invalid-feedback">
+                                Harap masukkan alamat email yang valid.
+                            </div>
+                        </div>
+                        
+                        <!-- Pesan -->
+                        <div class="mb-4">
+                            <label for="message" class="form-label">Pesan Anda</label>
+                            <textarea class="form-control" id="message" rows="5" placeholder="Tuliskan pesan Anda di sini..." required></textarea>
+                            <div class="invalid-feedback">
+                                Pesan tidak boleh kosong.
+                            </div>
+                        </div>
+                        
+                        <!-- Tombol Submit -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-send-fill me-2"></i>Kirim Pesan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-0">
+                &copy; 2025 Kreatif. Dibuat dengan <i class="bi bi-heart-fill text-danger"></i> menggunakan Bootstrap.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle (Wajib untuk komponen interaktif seperti Navbar) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Script untuk aktivasi validasi form Bootstrap -->
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (() => {
+          'use strict'
+
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          const forms = document.querySelectorAll('.needs-validation')
+
+          // Loop over them and prevent submission
+          Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+
+              form.classList.add('was-validated')
+            }, false)
+          })
+        })()
+    </script>
+</body>
+</html>
+
