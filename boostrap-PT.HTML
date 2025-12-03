@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT Apex Inovasi Digital</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        /* Mengatur background body agar efek Neumorphism terlihat */
+        body {
+            background-color: #e9ecef;
+        }
+        
+        /* --- CSS TOMBOL NAVIGASI 3D --- */
+        .nav-link-3d {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px #adb5bd; 
+            color: #212529 !important; 
+            font-weight: 600;
+            padding: 0.5rem 1rem !important;
+            margin: 0.25rem 0.25rem;
+            transition: all 0.1s ease-in-out;
+            position: relative;
+            top: 0;
+            text-align: center;
+        }
+        .nav-link-3d:hover {
+            background-color: #ffffff;
+            top: -2px;
+            box-shadow: 0 6px #888;
+        }
+        .nav-link-3d:active,
+        .nav-link-3d.active {
+            background-color: #e9ecef;
+            box-shadow: 0 1px #adb5bd;
+            top: 2px;
+        }
+        
+        /* --- CSS BARU: KARTU PROFIL 3D (Neumorphism) --- */
+        .profile-card-3d {
+            background-color: #e9ecef; /* Warna sama dengan body */
+            border-radius: 1.5rem; /* Lebih bulat */
+            padding: 1.5rem;
+            /* Efek bayangan 'timbul' (light top-left, dark bottom-right) */
+            box-shadow: 9px 9px 18px #c5c9cd, 
+                        -9px -9px 18px #ffffff;
+        }
+        .profile-img-3d {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin: auto;
+            /* Efek bayangan 'cekung' (inset) */
+            box-shadow: inset 6px 6px 12px #c5c9cd, 
+                        inset -6px -6px 12px #ffffff;
+        }
+        
+        /* --- CSS BARU: KARTU LAYANAN 3D (Hard Button) --- */
+        .card-3d-service {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            /* Bayangan tebal di bawah */
+            box-shadow: 0 8px #adb5bd; 
+            transition: all 0.1s ease-in-out;
+            position: relative;
+            top: 0;
+            border-radius: 0.5rem;
+        }
+        .card-3d-service:hover {
+            background-color: #ffffff;
+            top: -4px; /* Mengangkat lebih tinggi */
+            box-shadow: 0 12px #888; /* Bayangan lebih besar */
+        }
+        .card-3d-service:active {
+            background-color: #e9ecef;
+            box-shadow: 0 2px #adb5bd; /* Bayangan 'tertekan' */
+            top: 4px; /* Posisi 'tertekan' */
+        }
+        /* --- AKHIR CSS BARU --- */
+
+        /* Wrapper konten agar punya background putih terpisah */
+        .content-wrapper {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,.1);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid px-0">
+
+        <header class="row g-0">
+            <div class="col-12 bg-primary text-white text-center d-flex flex-column justify-content-center" style="min-height: 250px;">
+                <h1 class="display-4 fw-bold">PT Apex Inovasi Digital</h1>
+                <p class="lead fs-4">Solusi Digital Masa Kini</p>
+            </div>
+        </header>
+
+        <div class="row g-0">
+            <div class="col-12">
+                <nav class="navbar navbar-expand-lg bg-white shadow-sm border-bottom">
+                    <div class="container">
+                        <a class="navbar-brand fw-bold text-primary" href="#">PT AID</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link-3d active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-3d" href="#tentang">Tentang</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-3d" href="#layanan">Layanan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-3d" href="#kontak">Kontak</a>
+                </li> </ul>
+        </div>
+        
+        </div>
+</nav>
+
+        <main class="container my-5" id="tentang"></main>
+            <div class="row g-4 align-items-center">
+
+                <aside class="col-12 col-md-4">
+                    <div class="profile-card-3d text-center">
+                        <img src="https://raw.githubusercontent.com/evanridwan090906-alt/website/5bfae577a003abb6779c1e8c551dd2b24fd991a4/WhatsApp%20Image%202025-10-21%20at%2007.04.11_be3424df.jpg" class="profile-img-3d" alt="Foto CEO"> <div class="card-body">
+                            <h4 class="card-title mb-0 mt-3">Evan Ridwan Rustandi Saputra</h4> <p class="card-text text-muted">CEO & Founder</p> </div>
+                    </div>
+                </aside>
+
+                <section class="col-12 col-md-8">
+                    <div class="content-wrapper p-4 p-md-5">
+                        <h2 class="display-6 fw-semibold border-bottom pb-2 mb-3">Tentang Perusahaan</h2> <p class="lh-base">PT Apex Inovasi Digital adalah perusahaan rekayasa perangkat lunak dan konsultan teknologi generasi baru. Kami berfokus pada perancangan dan implementasi solusi digital end-to-end yang mendorong efisiensi, membuka aliran pendapatan baru, dan memberikan keunggulan kompetitif yang nyata bagi klien kami.</p> <p class="lh-base">Kami bukan sekadar vendor. Kami adalah mitra strategis yang menerjemahkan tantangan bisnis kompleks menjadi solusi teknologi yang scalable, secure, dan future-proof.</p>
+                    </div>
+                </section>
+            </div>
+
+            <div class="row mt-5 pt-4" id="layanan"></div>
+                <div class="col-12 text-center">
+                    <h2 class="display-5 fw-bold">Layanan Kami</h2> <p class="lead text-muted">Solusi komprehensif untuk kebutuhan digital Anda.</p>
+                </div>
+            </div>
+
+            <div class="row g-4 mt-3">
+
+                <div class="col-12 col-md-4">
+                    <div class="card h-100 card-3d-service text-center">
+                        <img src="https://tse3.mm.bing.net/th/id/OIP.KUmdw93brRTE_zZf7dkraQHaHa?w=175&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" class="card-img-top" alt="Web Development" style="border-radius: 0.5rem 0.5rem 0 0;"> <div class="card-body p-4">
+                            <i class="bi bi-code-slash fs-1 text-primary"></i>
+                            <h5 class="card-title fw-bold mt-3">PROGRAMMING</h5> <p class="card-text">Secara mendasar, pemrograman (programming) adalah proses memberi serangkaian instruksi yang sangat presisi dan logis kepada komputer untuk melakukan tugas tertentu.
+
+Ini adalah tentang komunikasi. Anda menerjemahkan logika manusia dan solusi masalah ke dalam bahasa yang dimengerti oleh mesin.</p> </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card h-100 card-3d-service text-center">
+                        <img src="data:image/webp;base64,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" class="card-img-top" alt="Desain Grafis" style="border-radius: 0.5rem 0.5rem 0 0;">
+                        <div class="card-body p-4">
+                            <i class="bi bi-palette fs-1 text-primary"></i>
+                            <h5 class="card-title fw-bold mt-3">DESAIN GRAFIS</h5>
+                            <p class="card-text">Solusi branding, UI/UX, dan materi pemasaran yang kreatif untuk meningkatkan identitas visual bisnis Anda.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card h-100 card-3d-service text-center">
+                        <img src="data:image/webp;base64,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" class="card-img-top" alt="Aplikasi Mobile" style="border-radius: 0.5rem 0.5rem 0 0;">
+                        <div class="card-body p-4">
+                            <i class="bi bi-phone fs-1 text-primary"></i>
+                            <h5 class="card-title fw-bold mt-3">WEB DEVELOMENT</h5>
+                            <p class="card-text">Web development adalah keseluruhan proses membangun dan memelihara situs web atau aplikasi web yang berjalan di internet. Proses ini secara fundamental terbagi menjadi dua area utama: Front-End (Sisi Klien), yang merupakan segala sesuatu yang dilihat dan dapat berinteraksi dengan pengguna di browser mereka (dibuat dengan HTML, CSS, dan JavaScript), dan Back-End (Sisi Server), yang merupakan mesin 'di belakang layar' yang berjalan di server untuk memproses logika bisnis, mengelola database (menggunakan bahasa seperti PHP, Python, atau SQL), dan menangani keamanan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="row g-0 mt-5" id="kontak"></footer>
+            <div class="col-12 bg-dark text-white text-center p-4"> <p class="mb-0">&copy; 2025 PT APEX INOVASI DIGITAL. All rights reserved.</p> </div>
+        </footer>
+
+    </div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
