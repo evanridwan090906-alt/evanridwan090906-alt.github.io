@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Evan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      height: 100%;
+      width: 100%;
+      color: #fff;
+      position: relative;
+    }
+
+    /* Video background */
+    #video-background {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -100;
+      background-size: cover;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.35);
+      z-index: -1;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(6px);
+      animation: fadeInDown 1.2s ease;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      text-shadow: 0 0 10px #00c6ff, 0 0 20px #007BFF;
+      transition: transform 0.3s;
+    }
+    header h1:hover {
+      transform: scale(1.05) rotate(-1deg);
+    }
+
+    @keyframes fadeInDown {
+      from {opacity: 0; transform: translateY(-50px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Navigasi */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 15px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(5px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+      box-shadow: 0 0 10px #fff, 0 0 20px #00c6ff;
+      transform: scale(1.1);
+    }
+
+    /* Main */
+    main {
+      text-align: center;
+      padding: 60px 20px;
+      animation: fadeIn 2s ease;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Tombol */
+    .btn-alert, .btn-bg {
+      border: none;
+      padding: 14px 28px;
+      margin: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 30px;
+      color: #fff;
+      transition: all 0.4s ease;
+    }
+    .btn-alert {
+      background: linear-gradient(45deg, #ff512f, #dd2476);
+      box-shadow: 0 0 15px rgba(255, 81, 47, 0.6);
+    }
+    .btn-bg {
+      background: linear-gradient(45deg, #24c6dc, #514a9d);
+      box-shadow: 0 0 15px rgba(36, 198, 220, 0.6);
+    }
+    .btn-alert:hover, .btn-bg:hover {
+      transform: scale(1.1) rotate(2deg);
+      box-shadow: 0 0 25px #fff, 0 0 35px #00c6ff;
+    }
+
+    /* Link eksternal */
+    a[target="_blank"] {
+      display: inline-block;
+      margin-top: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      background: rgba(0,0,0,0.3);
+      text-decoration: none;
+      box-shadow: 0 0 10px #fff;
+      transition: all 0.3s ease;
+    }
+    a[target="_blank"]:hover {
+      background: #ff5722;
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #ff5722, 0 0 40px #fff;
+    }
+
+    /* Ikon sosial */
+    .social-icons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .social-icons a {
+      font-size: 3rem;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .social-icons a:hover {
+      transform: scale(1.1);
+    }
+    .social-icons .fa-instagram {color: #fff;}
+    .social-icons .fa-instagram:hover {color: #E1306C;}
+    .social-icons .fa-whatsapp {color: #fff;}
+    .social-icons .fa-whatsapp:hover {color: #25D366;}
+    .social-icons .fa-linkedin {color: #fff;}
+    .social-icons .fa-linkedin:hover {color: #0077B5;}
+    .social-icons .fa-github {color: #fff;}
+    .social-icons .fa-github:hover {color: #333;}
+
+    /* Footer */
+    footer {
+      background: rgba(0,0,0,0.6);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    /* Menu bawah footer */
+    .menu-bawah {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: rgba(0,0,0,0.7);
+      padding: 12px 0;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.5);
+    }
+    .menu-bawah a {
+      color: #ddd;
+      font-size: 24px;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .menu-bawah a img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+    .menu-bawah a:hover {
+      color: #00d4ff;
+      transform: scale(1.2);
+    }
+    .menu-bawah a:hover img {
+      transform: scale(1.3);
+    }
+
+    /* Stars */
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 5s infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% {opacity: 0.2;}
+      50% {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop id="video-background">
+    <source src="https://raw.githubusercontent.com/evanridwan090906-alt/website/main/Spidermen.mp4" type="video/mp4">
+    Browser Anda tidak mendukung tag video.
+  </video>
+  <div class="overlay"></div>
+  <div class="stars">
+    <div class="star" style="top:20%; left:30%;"></div>
+    <div class="star" style="top:50%; left:70%;"></div>
+    <div class="star" style="top:80%; left:20%;"></div>
+    <div class="star" style="top:10%; left:80%;"></div>
+    <div class="star" style="top:60%; left:40%;"></div>
+  </div>
+
+  <header>
+    <h1>Selamat Datang di Website Evan</h1>
+  </header>
+
+  <nav>
+    <a href="#">Jurnal</a>
+    <a href="#">Laporan stock</a>
+    <a href="#">Persedian akhir</a>
+  </nav>
+
+  <main>
+    <h2>Fitur Interaktif</h2>
+    <p>Silakan coba tombol berikut:</p>
+    <button class="btn-alert" onclick="showAlert()">Klik Saya</button>
+    <button class="btn-bg" onclick="changeBackground()">Ganti Background</button>
+
+    <div class="social-icons">
+      <a href="https://www.instagram.com/evan_sxxz" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://wa.me/qr/ZPDFM4F6THTKI1" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.linkedin.com/in/evan-ridwan-164175382" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/evanridwan090906-alt" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+
+    <br><br>
+    <a href="https://www.google.com" target="_blank">Kunjungi</a>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Website Sederhana | Dibuat oleh Evan</p>
+  </footer>
+
+<style>
+  .menu-bawah {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+    pointer-events: none;
+  }
+  .menu-bawah.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+</style>
+
+<!-- Tombol -->
+<button class="menu-toggle" onclick="toggleMenu()">☰ Menu Bawah</button>
+
+<!-- Menu -->
+<div class="menu-bawah" id="menuBawah">
+  <a href="https://www.instagram.com/evan_sxxz" target="_blank"><i class="fab fa-instagram"></i></a>
+  <a href="http://shopee.co.id/evanridwan123" target="_blank"><i class="fa-solid fa-bag-shopping"></i></a>
+  <a href="https://ikmi.ac.id/" target="_blank"><img src="https://raw.githubusercontent.com/evanridwan090906-alt/website/main/ikmi-removebg-preview.png" alt="IKMI" style="height:24px;"></a>
+  <a href="https://www.google.com" target="_blank"><i class="fa-brands fa-google"></i></a>
+  <a href="https://www.realmadrid.com/" target="_blank"><img src="https://raw.githubusercontent.com/evanridwan090906-alt/website/main/madrid-removebg-preview.png" alt="" style="height:24px;"></a>
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("menuBawah").classList.toggle("show");
+  }
+</script>
+
+
+  <script>
+    function showAlert() {
+      alert("Halo! Saya Evan.");
+    }
+    function changeBackground() {
+      const colors = [
+        "linear-gradient(135deg, #ff9a9e, #fad0c4)",
+        "linear-gradient(135deg, #a1c4fd, #c2e9fb)",
+        "linear-gradient(135deg, #fbc2eb, #a6c1ee)",
+        "linear-gradient(135deg, #84fab0, #8fd3f4)",
+        "linear-gradient(135deg, #fccb90, #d57eeb)"
+      ];
+      document.querySelector(".overlay").style.background = colors[Math.floor(Math.random() * colors.length)];
+      document.querySelector(".overlay").style.opacity = "0.5";
+    }
+  </script>
+</body>
+</html>
